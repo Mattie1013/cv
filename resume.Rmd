@@ -1,6 +1,6 @@
 ---
-title: Nick Strayer's Resume"
-author: Nick Strayer
+title: Sarah Marsura's Resume"
+author: Sarah Marsura
 date: "`r Sys.Date()`"
 output:
   pagedown::html_resume:
@@ -29,16 +29,17 @@ source('parsing_functions.R')
 
 # First let's get the data, filtering to only the items tagged as
 # Resume items
-position_data <- read_csv('positions.csv') %>% 
-  filter(in_resume) %>% 
+library(readr)
+library(dplyr)
+
+position_data <- read_csv("positions.csv", show_col_types = FALSE) %>%
   mutate(
-    # Build some custom sections by collapsing others
-    section = case_when(
-      section %in% c('research_positions', 'industry_positions') ~ 'positions', 
-      section %in% c('data_science_writings', 'by_me_press') ~ 'writings',
-      TRUE ~ section
+    in_resume = case_when(
+      in_resume %in% c("TRUE","True","true","T","t","1","Yes","yes","Y","y") ~ TRUE,
+      in_resume %in% c("FALSE","False","false","F","f","0","No","no","N","n") ~ FALSE,
+      TRUE ~ TRUE  # if it isn't a TRUE/FALSE flag, keep it (prevents knit crash)
     )
-  ) 
+  )
 
 ```
 
@@ -54,49 +55,43 @@ Contact {#contact}
 
 
 
-- <i class="fa fa-envelope"></i> nick.strayer@gmail.com
-- <i class="fa fa-twitter"></i> NicholasStrayer
-- <i class="fa fa-github"></i> github.com/nstrayer
-- <i class="fa fa-link"></i> [nickstrayer.me](http://nickstrayer.me/)
-- <i class="fa fa-phone"></i> (734) 645-0110
+- <i class="fa fa-envelope"></i> smarsura@asu.edu
+- <i class="fa fa-github"></i> github.com/Mattie1013
+
+- <i class="fa fa-phone"></i> (509)868-5219
 
 
 
-Language Skills {#skills}
+Data Analytics Skills {#skills}
 --------------------------------------------------------------------------------
 
 
 ```{r}
 skills <- tribble(
   ~skill,               ~level,
-  "R",                  5,
-  "Javascript (d3.js)", 4.5,
-  "Python",             4,
-  "Bash",               3.5,
-  "SQL",                3,
-  "C++",                3,
-  "AWK",                3
+  "Excel",              5,
+  "PowerBI",            3,
+  "Share Point",        3,
+  "Tableau",            5,
 )
 build_skill_bars(skills)
 ```
 
 
 
-Open Source Contributions {#open-source}
+Data Analytics & Automation Projects {#open-source}
 --------------------------------------------------------------------------------
 
-All projects available at `github.com/nstrayer/<name>`
 
-
-- `shinysense`: R package to use sensor data in Shiny apps
-- `tuftesque`: Hugo theme (behind LiveFreeOrDichotomize.com)
-- `slid3r`: D3 add-on for fully svg slider inputs
+Analytics & Reporting Projects
+Power BI Service Audit Dashboard – Automated issue tracking and trend reporting.
+Predictive NPS Dashboard – Integrated service quality metrics and forecasting.
 
 
 More info {#more-info}
 --------------------------------------------------------------------------------
 
-See full CV at nickstrayer.me/cv for more complete list of positions and publications.
+See full CV at mattie1013.me/cv for more complete list of positions and publications.
 
 
 Disclaimer {#disclaimer}
@@ -104,53 +99,25 @@ Disclaimer {#disclaimer}
 
 Made w/ [**pagedown**](https://github.com/rstudio/pagedown). 
 
-Source code: [github.com/nstrayer/cv](https://github.com/nstrayer/cv).
+Source code: [github.com/Mattie1013/cv](https://github.com/Mattie1013/cv).
 
 Last updated on `r Sys.Date()`.
-
 
 
 
 Main
 ================================================================================
 
-Nick Strayer {#title}
+Sarah Marsura {#title}
 --------------------------------------------------------------------------------
 
 ```{r}
-intro_text <- "I have made [visualizations viewed by hundreds of thousands of people](https://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), [sped up query times for 25 terabytes of data by an average of 4,800 times](https://livefreeordichotomize.com/2019/06/04/using_awk_and_r_to_parse_25tb/), and built [packages for R](https://github.com/nstrayer/shinysense) that let you [do magic](http://nickstrayer.me/dataDayTexas/).
+intro_text <- "Data and reporting analyst with a background in healthcare logistics, process improvement, and customer-focused operations. I build reliable reporting systems, automate audits, and turn messy operational data into clear insights using Excel and Power BI.
 
-Currently searching for a data science position that allows me to build tools using visualization and machine learning to help people explore and understand their data. 
+Recent work includes developing service-audit reporting workflows, trend analysis for recurring test order issues, and supporting operational teams with standardized and ad-hoc performance reporting.
+
+View this resume's source code here: https://github.com/Mattie1013/cv
 "
-
 
 cat(sanitize_links(intro_text))
 ```
-
-
-
-Education {data-icon=graduation-cap data-concise=true}
---------------------------------------------------------------------------------
-
-```{r}
-position_data %>% print_section('education')
-```
-
-
-
-Selected Positions {data-icon=suitcase}
---------------------------------------------------------------------------------
-
-```{r}
-position_data %>% print_section('positions')
-```
-
-Selected Writing {data-icon=newspaper}
---------------------------------------------------------------------------------
-
-
-```{r}
-position_data %>% print_section('writings')
-```
-
-
